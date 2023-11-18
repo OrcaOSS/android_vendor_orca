@@ -29,7 +29,8 @@ PRODUCT_PACKAGES += \
 
 # Themes
 PRODUCT_PACKAGES += \
-    ThemePicker
+    ThemePicker \
+    OrcaThemesStub
 
 PRODUCT_SIZE := full
 
