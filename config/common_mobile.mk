@@ -1,85 +1,23 @@
 # Inherit common mobile Lineage stuff
-$(call inherit-product, vendor/lineage/config/common.mk)
-
-# Include AOSP audio files
-include vendor/lineage/config/aosp_audio.mk
-
-# Include Lineage audio files
-include vendor/lineage/config/lineage_audio.mk
-
-# Default notification/alarm sounds
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.notification_sound=Argon.ogg \
-    ro.config.alarm_alert=Hassium.ogg
+$(call inherit-product, vendor/orca/config/common.mk)
 
 # Apps
 PRODUCT_PACKAGES += \
-    Backgrounds \
-    ExactCalculator \
-    Jelly
+    Backgrounds
 
-ifeq ($(PRODUCT_TYPE), go)
 PRODUCT_PACKAGES += \
-    TrebuchetQuickStepGo
+    Launcher3QuickStep
 
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    TrebuchetQuickStepGo
-else
-PRODUCT_PACKAGES += \
-    TrebuchetQuickStep
-
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    TrebuchetQuickStep
-endif
+    Launcher3QuickStep
 
 PRODUCT_PACKAGES += \
-    TrebuchetOverlay
+    Launcher3Overlay
 
 # Charger
 PRODUCT_PACKAGES += \
-    charger_res_images
-
-ifneq ($(WITH_LINEAGE_CHARGER),false)
-PRODUCT_PACKAGES += \
-    lineage_charger_animation \
-    lineage_charger_animation_vendor
-endif
-
-# Customizations
-PRODUCT_PACKAGES += \
-    IconPackCircularAndroidOverlay \
-    IconPackCircularLauncherOverlay \
-    IconPackCircularSettingsOverlay \
-    IconPackCircularSystemUIOverlay \
-    IconPackFilledAndroidOverlay \
-    IconPackFilledLauncherOverlay \
-    IconPackFilledSettingsOverlay \
-    IconPackFilledSystemUIOverlay \
-    IconPackKaiAndroidOverlay \
-    IconPackKaiLauncherOverlay \
-    IconPackKaiSettingsOverlay \
-    IconPackKaiSystemUIOverlay \
-    IconPackRoundedAndroidOverlay \
-    IconPackRoundedLauncherOverlay \
-    IconPackRoundedSettingsOverlay \
-    IconPackRoundedSystemUIOverlay \
-    IconPackSamAndroidOverlay \
-    IconPackSamLauncherOverlay \
-    IconPackSamSettingsOverlay \
-    IconPackSamSystemUIOverlay \
-    IconPackVictorAndroidOverlay \
-    IconPackVictorLauncherOverlay \
-    IconPackVictorSettingsOverlay \
-    IconPackVictorSystemUIOverlay \
-    IconShapePebbleOverlay \
-    IconShapeRoundedRectOverlay \
-    IconShapeSquareOverlay \
-    IconShapeSquircleOverlay \
-    IconShapeTaperedRectOverlay \
-    IconShapeTeardropOverlay \
-    IconShapeVesselOverlay \
-    LineageNavigationBarNoHint \
-    NavigationBarMode2ButtonOverlay
+    charger_res_images \
+    product_charger_res_images
 
 # Media
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -91,6 +29,26 @@ PRODUCT_PACKAGES += \
 
 # Themes
 PRODUCT_PACKAGES += \
-    LineageBlackTheme \
-    ThemePicker \
-    ThemesStub
+    ThemePicker
+
+PRODUCT_SIZE := full
+
+ifneq ($(PRODUCT_NO_CAMERA),true)
+PRODUCT_PACKAGES += \
+    Aperture
+endif
+
+# Extra cmdline tools
+PRODUCT_PACKAGES += \
+    unrar \
+    zstd
+
+# Required packages
+PRODUCT_PACKAGES += \
+    LatinIME
+
+# Enable support of one-handed mode
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.support_one_handed_mode?=true
+
+$(call inherit-product, vendor/orca/config/telephony.mk)
